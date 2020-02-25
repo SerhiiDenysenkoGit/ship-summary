@@ -1,0 +1,30 @@
+spring:
+  resources:
+    chain:
+      cache: false
+  datasource:
+    url: jdbc:mysql://remotemysql.com:3306/THiOkM9lVP?useUnicode=true&characterEncoding=utf-8
+    username: THiOkM9lVP
+    password: M1Pzw6zpwT
+    hikari:
+      maximum-pool-size: 1
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+        use_sql_comments: true
+        dialect: org.hibernate.dialect.MySQLDialect
+    show-sql: true
+  servlet:
+    multipart:
+      max-file-size: 200MB
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+logging:
+  level:
+    org.springframework: debug
+server:
+  port: 8080
