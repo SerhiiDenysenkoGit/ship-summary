@@ -1,53 +1,73 @@
 import React from 'react';
-import {Box, Button, Form, FormField, Main} from "grommet";
 import axios from 'axios';
 import {CommonService} from "../CommonService";
 import {createPath} from "../commons";
+import {Field} from "./components/Field";
 
 export class UnauthenticatedContent extends React.Component {
 
+    constructor(props) {
+        super(props);
 
-    constructor(props, context) {
-        super(props, context);
+        this.state = {
+            invalidCredentials: false,
+            username: "",
+            password: ""
+        };
 
-        this.submit = this.submit.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleChange(event) {
+        this.setState({
+            [event.target.name]: event.target.value
+        });
+    }
+
+    handleSubmit(event) {
+        event.preventDefault();
+
+        axios.post(createPath('/login'), this.state)
+            .then(res => {
+                CommonService.addToken(res.data.token);
+                location.replace("/");
+            })
+            .catch(res => this.setState({invalidCredentials: true}))
     }
 
     render() {
         return (
-            <Main pad="large">
-                <Box
-                    direction="column"
-                    border={{color: 'brand', size: 'small'}}
-                    pad="medium"
-                    alignContent="center"
-                    align="center"
-                    alignSelf="center"
-                    width="medium"
-                >
-                    <Form onSubmit={({value}) => this.submit(value)}>
-                        <FormField name="username" label="Имя пользователя"/>
-                        <FormField name="password" label="Пароль" type="password"/>
-                        <Button type="submit" alignSelf="center" primary label="Логин"/>
-                    </Form>
-                </Box>
-            </Main>
-
-
+            <div className="columns">
+                <div className="column is-4 is-offset-4">
+                    <form onSubmit={this.handleSubmit}>
+                        <Field name='username'
+                               label='Имя пользователя'
+                               placeholder='Введите имя пользователя'
+                               value={this.state.username}
+                               onChange={this.handleChange}/>
+                        <Field name="password"
+                               label='Пароль'
+                               placeholder='Введите пароль'
+                               type="password"
+                               value={this.state.password}
+                               onChange={this.handleChange}/>
+                        <div className="field is-grouped is-grouped-centered">
+                            <p className="control">
+                                <button type="submit" className="button is-primary">
+                                    Логин
+                                </button>
+                            </p>
+                        </div>
+                        <div className="field is-grouped is-grouped-centered">
+                            <p className="control">
+                               { this.state.invalidCredentials ? <p className="help is-danger">Неправильный логин или пароль</p> : null }
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
         );
     }
 
-    submit(form) {
-        axios.post(createPath('/login'), form)
-            .then(res => {
-                CommonService.addToken(res.data.token);
-                console.log("Result:");
-                console.log(res);
-                //window.location.reload();
-            })
-            .then(res => {
-                window.location.reload();
-            })
-            .catch(res => this.setState({invalidCredentials: true}))
-    }
 }

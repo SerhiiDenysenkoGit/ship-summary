@@ -1,7 +1,7 @@
 import React from "react";
 import {CommonService} from "../CommonService";
-import {Anchor, Box, Header} from "grommet";
 import {Link} from "react-router-dom";
+import NavBarItem from "./components/NavbarItem";
 
 export class HeaderRow extends React.Component {
 
@@ -18,27 +18,32 @@ export class HeaderRow extends React.Component {
     render() {
         const {isAuthenticated, currentUser} = this.props;
 
-        console.log(currentUser);
-
         if (isAuthenticated) {
             return (
-                <Header background="light-4" pad="small">
-                    <Box direction="row" gap="medium">
-                        {CommonService.hasAdminRole(currentUser) ?
-                            <Link to="/ui/user/add">
-                                <Anchor label="Добавить пользователя"/>
-                            </Link> : null
-                        }
-                        {CommonService.hasAdminRole(currentUser) || CommonService.hasOperatorRole(currentUser) ?
-                            <Link to="/ui/summary/add">
-                                <Anchor label="Добавить сводку"/>
-                            </Link> : null
-                        }
-                        <Link to="/ui/summary/list">
-                            <Anchor label="Сводки"/>
-                        </Link>
-                    </Box>
-                </Header>
+                <div className='navbar'>
+                    <div className="navbar-menu">
+                        <div className="navbar-start">
+                            <NavBarItem to='/'
+                                        title='Сводки'
+                                        how={true}/>
+                            <NavBarItem to='/ui/summary/add'
+                                        title='Добавить сводку'
+                                        how={CommonService.hasOperatorRole(currentUser) || CommonService.hasAdminRole(currentUser)}/>
+                            <NavBarItem to='/ui/users/add'
+                                        title="Добавить пользователя"
+                                        show={CommonService.hasAdminRole(currentUser)}/>
+                        </div>
+                    </div>
+                    <div className="navbar-end">
+                        <div className="navbar-item">
+                            <div>
+                                <div className="button is-light">
+                                    <Link onClick={HeaderRow.logout} to="/">Выйти</Link>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             );
         } else {
             return null;

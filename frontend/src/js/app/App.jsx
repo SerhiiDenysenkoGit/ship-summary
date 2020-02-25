@@ -45,12 +45,12 @@ export class App extends React.Component {
         const {isAuthenticated, currentUser} = this.state;
         console.log(this.state);
         return (
-            <Grommet plain>
+            <div className="container">
                 <HeaderRow isAuthenticated={isAuthenticated} currentUser={currentUser}/>
                 {isAuthenticated
                     ? <AuthenticatedContent/>
                     : <UnauthenticatedContent/>}
-            </Grommet>
+            </div>
         );
     }
 
