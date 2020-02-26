@@ -6,7 +6,6 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -23,7 +22,7 @@ public class Summary {
     private int summaryId;
 
     @Column(name = "date")
-    private LocalDateTime dateTime;
+    private String date;
 
     @Column(name = "longitude")
     private Double longitude;
@@ -46,7 +45,7 @@ public class Summary {
     @Column(name = "comments")
     private String comments;
 
-    @OneToMany(mappedBy = "summary")
+    @OneToMany(mappedBy = "summary", fetch = FetchType.LAZY)
     private List<SummaryRecord> summaryRecords;
 
 }

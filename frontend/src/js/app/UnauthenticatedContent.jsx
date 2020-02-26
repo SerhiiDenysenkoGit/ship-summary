@@ -60,9 +60,9 @@ export class UnauthenticatedContent extends React.Component {
                             </p>
                         </div>
                         <div className="field is-grouped is-grouped-centered">
-                            <p className="control">
+                            <div className="control">
                                { this.state.invalidCredentials ? <p className="help is-danger">Неправильный логин или пароль</p> : null }
-                            </p>
+                            </div>
                         </div>
                     </form>
                 </div>

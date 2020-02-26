@@ -1,0 +1,14 @@
+package com.shipsummarry.controller.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class SummarySearchRequest {
+
+    private String date;
+
+}
