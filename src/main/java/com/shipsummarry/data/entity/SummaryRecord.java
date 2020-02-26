@@ -16,7 +16,7 @@ public class SummaryRecord {
 
     @Id
     @Column(name = "summary_recod_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int summaryRecordId;
 
     @JsonIgnore

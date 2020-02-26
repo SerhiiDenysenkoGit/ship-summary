@@ -1,11 +1,9 @@
 import React from 'react';
 import {UnauthenticatedContent} from "./UnauthenticatedContent";
-import {Anchor, Box, Grommet} from 'grommet';
 import {CommonService} from "../CommonService";
 import {AuthenticatedContent} from "./AuthenticatedContent";
 import {HeaderRow} from "./Header";
-import {Link} from "react-router-dom";
-import axios  from "axios";
+import axios from "axios";
 import {createPath} from "../commons";
 
 export class App extends React.Component {
@@ -42,16 +40,18 @@ export class App extends React.Component {
     }
 
     render() {
-        const {isAuthenticated, currentUser} = this.state;
-        console.log(this.state);
-        return (
-            <div className="container">
-                <HeaderRow isAuthenticated={isAuthenticated} currentUser={currentUser}/>
-                {isAuthenticated
-                    ? <AuthenticatedContent/>
-                    : <UnauthenticatedContent/>}
-            </div>
-        );
+        const {isAuthenticated, currentUser, isLoaded} = this.state;
+
+        return isLoaded
+            ? (
+                <div className="container">
+                    <HeaderRow isAuthenticated={isAuthenticated} currentUser={currentUser}/>
+                    {isAuthenticated
+                        ? <AuthenticatedContent currentUser={currentUser}/>
+                        : <UnauthenticatedContent/>}
+                </div>
+            )
+            : <h3 className="title is-3">Загрузка...</h3>;
     }
 
 }

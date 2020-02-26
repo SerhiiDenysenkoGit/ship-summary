@@ -1,11 +1,10 @@
 package com.shipsummarry.controller;
 
+import com.shipsummarry.controller.dto.PasswordChangeRequest;
 import com.shipsummarry.data.entity.WebUser;
 import com.shipsummarry.service.UserService;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/users")
@@ -26,6 +25,15 @@ public class UserController {
                 .orElseThrow(() -> new IllegalArgumentException("User not found!"));
     }
 
+    @PostMapping
+    public String createUser(@RequestBody WebUser webUser) {
+        return userService.createUser(webUser);
+    }
+
+    @PutMapping("/password")
+    public void updatePassword(@RequestBody PasswordChangeRequest changeRequest) {
+        userService.updatePassword(changeRequest);
+    }
 
 
 }

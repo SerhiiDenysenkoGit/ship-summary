@@ -19,7 +19,7 @@ public class Summary {
 
     @Id
     @Column(name = "summary_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int summaryId;
 
     @Column(name = "date")

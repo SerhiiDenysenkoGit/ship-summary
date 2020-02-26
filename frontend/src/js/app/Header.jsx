@@ -25,13 +25,16 @@ export class HeaderRow extends React.Component {
                         <div className="navbar-start">
                             <NavBarItem to='/'
                                         title='Сводки'
-                                        how={true}/>
+                                        show={true}/>
                             <NavBarItem to='/ui/summary/add'
                                         title='Добавить сводку'
-                                        how={CommonService.hasOperatorRole(currentUser) || CommonService.hasAdminRole(currentUser)}/>
+                                        show={CommonService.hasOperatorRole(currentUser) || CommonService.hasAdminRole(currentUser)}/>
                             <NavBarItem to='/ui/users/add'
                                         title="Добавить пользователя"
                                         show={CommonService.hasAdminRole(currentUser)}/>
+                            <NavBarItem to='/ui/users/profile'
+                                        title="Кабинет пользователя"
+                                        show={true}/>
                         </div>
                     </div>
                     <div className="navbar-end">

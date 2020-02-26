@@ -3,6 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 import {SummaryList} from "./SummaryList";
 import {AddUser} from "./AddUser";
 import {AddSummary} from "./AddSummary";
+import {Cabinet} from "./Cabinet";
 
 export class AuthenticatedContent extends React.Component {
 
@@ -13,6 +14,7 @@ export class AuthenticatedContent extends React.Component {
                     <Route exact path='/' component={(props) => <SummaryList {...props} currentUser={this.props.currentUser}/>}/>
                     <Route path='/ui/summary/add' component={(props) => <AddSummary {...props}/>}/>
                     <Route path='/ui/users/add' component={(props) => <AddUser {...props}/>}/>
+                    <Route path='/ui/users/profile' component={(props) => <Cabinet {...props} currentUser={this.props.currentUser}/>}/>
                 </Switch>
             </div>
         );
