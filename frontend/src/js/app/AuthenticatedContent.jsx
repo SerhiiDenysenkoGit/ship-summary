@@ -2,7 +2,7 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import {SummaryList} from "./SummaryList";
 import {AddUser} from "./AddUser";
-import {AddSummary} from "./AddSummary";
+import {AddSummary} from "./summary/AddSummary";
 import {Cabinet} from "./Cabinet";
 
 export class AuthenticatedContent extends React.Component {

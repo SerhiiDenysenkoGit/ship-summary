@@ -1,12 +1,10 @@
 package com.shipsummarry.controller;
 
+import com.shipsummarry.controller.dto.RecordTypeDto;
 import com.shipsummarry.controller.dto.SummarySearchRequest;
 import com.shipsummarry.controller.dto.SummaryGenericDetails;
 import com.shipsummarry.service.SummaryService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,6 +21,11 @@ public class SummaryController {
     @PostMapping("/search")
     public List<SummaryGenericDetails> getSummaries(@RequestBody SummarySearchRequest request) {
         return summaryService.getSummaries(request);
+    }
+
+    @GetMapping("/records/types")
+    public List<RecordTypeDto> getRecordTypes() {
+        return summaryService.getRecordTypes();
     }
 
 }
