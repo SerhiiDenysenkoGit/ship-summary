@@ -1,11 +1,36 @@
 package com.shipsummarry.data.repository;
 
+import com.shipsummarry.controller.dto.SummarySearchRequest;
 import com.shipsummarry.data.entity.Summary;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
+
+import javax.persistence.criteria.Predicate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository
-public interface SummaryRepository extends JpaRepository<Summary, Integer>, JpaSpecificationExecutor<Summary> {
+public interface SummaryRepository extends PagingAndSortingRepository<Summary, Integer>, JpaSpecificationExecutor<Summary> {
+
+    static Specification<Summary> createSummaryFilter(SummarySearchRequest request) {
+        return (root, query, cb) -> {
+            query.distinct(true);
+
+            List<Predicate> predicates = new ArrayList<>();
+
+            if (!StringUtils.isEmpty(request.getDate())) {
+                predicates.add(cb.equal(
+                        root.get("date"),
+                        request.getDate()));
+            }
+
+            return cb.and(
+                    predicates.toArray(new Predicate[]{})
+            );
+        };
+    }
 
 }

@@ -2,6 +2,7 @@ package com.shipsummarry.data.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,13 +10,14 @@ import javax.persistence.*;
 
 @Data
 @Entity
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "summary_record")
 public class SummaryRecord {
 
     @Id
-    @Column(name = "summary_recod_id")
+    @Column(name = "summary_record_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int summaryRecordId;
 

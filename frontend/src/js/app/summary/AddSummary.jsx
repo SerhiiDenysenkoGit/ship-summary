@@ -20,13 +20,15 @@ export class AddSummary extends React.Component {
                 mode: '',
                 speed: '',
                 heading: '',
-                comments: ''
-            },
-            records: []
+                comments: '',
+                summaryRecords: []
+            }
+
         };
 
         this.handleSummaryFieldChange = this.handleSummaryFieldChange.bind(this);
         this.handleRecordChange = this.handleRecordChange.bind(this);
+        this.addSummary = this.addSummary.bind(this);
     }
 
     componentDidMount() {
@@ -44,7 +46,7 @@ export class AddSummary extends React.Component {
                 });
 
                 let newState = Object.assign({}, this.state);
-                newState.records = records;
+                newState.summary.summaryRecords = records;
                 this.setState(newState);
 
             })
@@ -55,7 +57,7 @@ export class AddSummary extends React.Component {
         console.log(newState);
         console.log(event);
         console.log(typeEnum);
-        newState.records
+        newState.summary.summaryRecords
             .filter(record => record.name === typeEnum)
             .forEach(record => {
                 console.log(record);
@@ -72,20 +74,35 @@ export class AddSummary extends React.Component {
     }
 
     render() {
-        const {summary, records} = this.state;
+        const {summary} = this.state;
 
         return (
             <div className="container">
                 <div className="title is-3">Введите данные сводки:</div>
                 <SummaryInfo summary={summary} handleSummaryFieldChange={this.handleSummaryFieldChange}/>
-                {records.map((record, index) =>
+                {summary.summaryRecords.map((record, index) =>
                     (
                         <SummaryRecordRow key={index} record={record} handleChange={this.handleRecordChange}/>
                     )
                 )}
+                <div className="field is-grouped is-grouped-centered">
+                    <p className="control">
+                        <button type="submit" className="button is-primary" onClick={this.addSummary}>
+                            Добавить сводку
+                        </button>
+                    </p>
+                </div>
             </div>
 
         );
     }
 
+    addSummary() {
+        axios
+            .post(createPath("/api/summaries/"), this.state.summary, CommonService.getAuthHeaders())
+            .then(res => {
+                console.log(res);
+            })
+    }
 }
+

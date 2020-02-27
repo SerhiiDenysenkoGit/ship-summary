@@ -1,8 +1,10 @@
 package com.shipsummarry.controller;
 
 import com.shipsummarry.controller.dto.RecordTypeDto;
+import com.shipsummarry.controller.dto.SummaryDto;
+import com.shipsummarry.controller.dto.SummaryPageDto;
 import com.shipsummarry.controller.dto.SummarySearchRequest;
-import com.shipsummarry.controller.dto.SummaryGenericDetails;
+import com.shipsummarry.data.entity.Summary;
 import com.shipsummarry.service.SummaryService;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,13 +21,23 @@ public class SummaryController {
     }
 
     @PostMapping("/search")
-    public List<SummaryGenericDetails> getSummaries(@RequestBody SummarySearchRequest request) {
+    public SummaryPageDto getSummaries(@RequestBody SummarySearchRequest request) {
         return summaryService.getSummaries(request);
+    }
+
+    @GetMapping("/{summaryId}")
+    public Summary getSummaries(@PathVariable("summaryId") int summaryId) {
+        return summaryService.getSummaryById(summaryId);
     }
 
     @GetMapping("/records/types")
     public List<RecordTypeDto> getRecordTypes() {
         return summaryService.getRecordTypes();
+    }
+
+    @PostMapping("")
+    public int createSummary(@RequestBody SummaryDto summary) {
+        return summaryService.createSummary(summary);
     }
 
 }

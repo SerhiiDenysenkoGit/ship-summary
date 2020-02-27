@@ -7,7 +7,7 @@ spring:
     username: THiOkM9lVP
     password: M1Pzw6zpwT
     hikari:
-      maximum-pool-size: 10
+      maximum-pool-size: 2
   jpa:
     properties:
       hibernate:

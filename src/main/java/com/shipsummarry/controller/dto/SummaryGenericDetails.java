@@ -5,8 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-
 @Data
 @Builder
 @NoArgsConstructor
@@ -14,6 +12,7 @@ import java.util.Date;
 public class SummaryGenericDetails {
 
     private int summaryId;
-    private Date date;
-
+    private String date;
+    private Double longitude;
+    private Double latitude;
 }

@@ -24,6 +24,7 @@ export class SummaryInfo extends React.Component {
                     <Field value={summary.trawlingCount}
                            label="Количество тралений"
                            name="trawlingCount"
+                           type="number"
                            onChange={handleSummaryFieldChange}/>
                     <Field value={summary.mode}
                            label="Режим работы"

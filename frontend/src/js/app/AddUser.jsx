@@ -175,7 +175,7 @@ export class AddUser extends React.Component {
                         <div className="field is-grouped is-grouped-centered">
                             <p className="control">
                                 <button type="submit" className="button is-primary">
-                                    Зарегистрироваться
+                                    Добавить пользователя
                                 </button>
                             </p>
                         </div>
