@@ -12,7 +12,7 @@ export class SummaryRecordTableRow extends React.Component {
 
         return (
             <tr>
-                <th>{record.type}</th>
+                <th>{record.typeName}</th>
                 <td>{record.units}</td>
                 <td>{record.day}</td>
                 <td>{record.board}</td>

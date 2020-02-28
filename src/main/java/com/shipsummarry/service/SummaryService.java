@@ -14,7 +14,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.Arrays;
 import java.util.List;
@@ -31,6 +34,7 @@ public class SummaryService {
         this.summaryRecordRepository = summaryRecordRepository;
     }
 
+    @Transactional(readOnly = true)
     public SummaryPageDto getSummaries(SummarySearchRequest request) {
         Pageable pageable = PageRequest.of(request.getPage(), request.getPageSize(), Sort.by(Sort.Direction.DESC, "date"));
 
@@ -42,6 +46,7 @@ public class SummaryService {
                 .build();
     }
 
+    @Transactional(readOnly = true)
     public Summary getSummaryById(int summaryId) {
         Summary summary = summaryRepository.findById(summaryId).orElse(null);
         List<SummaryRecord> records = summary.getSummaryRecords();
@@ -62,12 +67,40 @@ public class SummaryService {
                 ).collect(Collectors.toList());
     }
 
+    @Transactional
     public int createSummary(SummaryDto summaryDto) {
+        if (checkIfSummaryExistsForDate(summaryDto.getDate())) {
+            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Summary with defined date exists");
+        }
         Summary summary = SummaryMapper.mapSummaryDtoToEntity(summaryDto);
 
         summaryRepository.save(summary);
         summary.getSummaryRecords().forEach(record -> record.setSummary(summary));
         summaryRecordRepository.saveAll(summary.getSummaryRecords());
         return summary.getSummaryId();
+    }
+
+    @Transactional
+    public void updateSummary(SummaryDto summaryDto) {
+        Summary summary = SummaryMapper.mapSummaryDtoToEntity(summaryDto);
+        summaryRepository.save(summary);
+        summary.getSummaryRecords().forEach(record -> record.setSummary(summary));
+        summaryRecordRepository.saveAll(summary.getSummaryRecords());
+    }
+
+    public Summary findByDate(String date) {
+        Summary summary =
+                summaryRepository.findAll(SummaryRepository.byDate(date))
+                        .stream()
+                        .findFirst()
+                        .orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Summary not found"));
+        List<SummaryRecord> records = summary.getSummaryRecords();
+        records.forEach(record -> record.setTypeName(record.getName().getName()));
+        return summary;
+    }
+
+    @Transactional(readOnly = true)
+    public boolean checkIfSummaryExistsForDate(String date) {
+        return summaryRepository.findOne(SummaryRepository.byDate(date)).isPresent();
     }
 }

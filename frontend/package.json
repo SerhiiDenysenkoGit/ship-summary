@@ -34,6 +34,8 @@
     "bootstrap": "^4.4.1",
     "grommet": "^2.11.1",
     "grommet-icons": "^4.4.0",
+    "html2canvas": "^1.0.0-rc.5",
+    "jspdf": "^1.5.3",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-router-dom": "latest",

@@ -17,7 +17,7 @@ public class CustomStringDoubleDeserializer extends JsonDeserializer<Double> {
         if (node.asText().isEmpty()) {
             return null;
         }
-        return node.asDouble();
+        return Double.parseDouble(node.asText());
     }
 
 }

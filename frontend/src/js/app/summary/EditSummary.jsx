@@ -11,8 +11,6 @@ export class EditSummary extends React.Component {
     constructor(props) {
         super(props);
 
-        console.log(this.props);
-
         this.state = {
             showSuccess: false,
             showError: false,
@@ -70,16 +68,16 @@ export class EditSummary extends React.Component {
             <div className="container">
                 {showSuccess ?
                     <Notification
-                        message={'Сводка добавлена успешно'}
+                        message={'Сводка сохранена успешно'}
                         type="is-success"
                         closeHandler={this.closeSuccessMsg}/> : null}
                 {showError ?
                     <Notification
-                        message={'Ошибка созранения. Проерьте, что все поля введены верно'}
+                        message={'Ошибка сохранения. Проверьте, что все поля введены верно'}
                         type="is-danger"
                         closeHandler={this.closeErrorMsg}/> : null}
                 <div className="title is-3">Введите данные сводки:</div>
-                <SummaryInfoEdit summary={summary} handleSummaryFieldChange={this.handleSummaryFieldChange}/>
+                <SummaryInfoEdit dateDisabled={true} summary={summary} handleSummaryFieldChange={this.handleSummaryFieldChange}/>
                 {summary.summaryRecords.map((record, index) =>
                     (
                         <SummaryRecordEditRow key={index} record={record} handleChange={this.handleRecordChange}/>
@@ -99,17 +97,16 @@ export class EditSummary extends React.Component {
 
     editSummary() {
         axios
-            .post(createPath("/api/summaries/"), this.state.summary, CommonService.getAuthHeaders())
+            .patch(createPath("/api/summaries/"), this.state.summary, CommonService.getAuthHeaders())
             .then(res => {
-                let prevState = this.state;
+                console.log(res);
+                let prevState = Object.assign({}, this.state);
                 prevState.showSuccess = true;
                 prevState.showError = false;
-                prevState.summary = this.prepareEmptySummary();
                 this.setState(prevState);
             })
             .catch(error => {
-                console.log(error.response);
-                let prevState = this.state;
+                let prevState = Object.assign({}, this.state);
                 prevState.showError = true;
                 this.setState(prevState);
             });

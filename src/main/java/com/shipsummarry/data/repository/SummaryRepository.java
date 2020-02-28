@@ -33,4 +33,12 @@ public interface SummaryRepository extends PagingAndSortingRepository<Summary, I
         };
     }
 
+    static Specification<Summary> equalPredicate(String fieldName, String value) {
+        return (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.equal(root.get(fieldName), value);
+    }
+
+    static Specification<Summary> byDate(String date) {
+        return equalPredicate("date", date);
+    }
+
 }

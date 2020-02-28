@@ -38,7 +38,7 @@ export class AddSummary extends React.Component {
                         closeHandler={this.closeSuccessMsg}/> : null}
                 {showError ?
                     <Notification
-                        message={'Ошибка созранения. Проерьте, что все поля введены верно'}
+                        message={'Ошибка сохранения. Проверьте, что все поля введены верно'}
                         type="is-danger"
                         closeHandler={this.closeErrorMsg}/> : null}
                 <div className="title is-3">Введите данные сводки:</div>

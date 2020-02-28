@@ -30,6 +30,16 @@ public class SummaryController {
         return summaryService.getSummaryById(summaryId);
     }
 
+    @GetMapping("/date/{date}")
+    public Summary getSummaryByDate(@PathVariable("date") String date) {
+        return summaryService.findByDate(date);
+    }
+
+    @GetMapping("/exists/{date}")
+    public boolean checkIfSummaryExistsForDate(@PathVariable("date") String date) {
+        return summaryService.checkIfSummaryExistsForDate(date);
+    }
+
     @GetMapping("/records/types")
     public List<RecordTypeDto> getRecordTypes() {
         return summaryService.getRecordTypes();
@@ -39,5 +49,11 @@ public class SummaryController {
     public int createSummary(@RequestBody SummaryDto summary) {
         return summaryService.createSummary(summary);
     }
+
+    @PatchMapping("")
+    public void updateSummary(@RequestBody SummaryDto summary) {
+        summaryService.updateSummary(summary);
+    }
+
 
 }

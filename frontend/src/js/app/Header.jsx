@@ -20,7 +20,7 @@ export class HeaderRow extends React.Component {
 
         if (isAuthenticated) {
             return (
-                <div className='navbar'>
+                <div className='navbar exclude-from-pdf'>
                     <div className="navbar-menu">
                         <div className="navbar-start">
                             <NavBarItem to='/'
@@ -35,6 +35,9 @@ export class HeaderRow extends React.Component {
                             <NavBarItem to='/ui/users/profile'
                                         title="Кабинет пользователя"
                                         show={true}/>
+                            <NavBarItem to='/ui/summaries/compare'
+                                        title="Сравнить сводки"
+                                        show={CommonService.hasOperatorRole(currentUser) || CommonService.hasAdminRole(currentUser)}/>
                         </div>
                     </div>
                     <div className="navbar-end">
