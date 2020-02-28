@@ -1,7 +1,7 @@
 import React from 'react';
 import {Field} from "../components/Field";
 
-export class SummaryRecordRow extends React.Component {
+export class SummaryRecordEditRow extends React.Component {
 
     constructor(props) {
         super(props);
@@ -15,6 +15,7 @@ export class SummaryRecordRow extends React.Component {
             <div className="columns">
                 <div className="column is-6">
                     <Field value={record.typeName}
+                           disabled={true}
                            name="recordType"
                            onChange={(event) => handleChange(event, record.name)}/>
                 </div>

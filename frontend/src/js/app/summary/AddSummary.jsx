@@ -1,10 +1,10 @@
 import React from 'react';
-import {Field} from "../components/Field";
-import {SummaryInfo} from "./SummaryInfo";
-import {SummaryRecordRow} from "./SummaryRecordRow";
+import {SummaryInfoEdit} from "./SummaryInfoEdit";
+import {SummaryRecordEditRow} from "./SummaryRecordEditRow";
 import axios from 'axios';
 import {createPath} from "../../commons";
 import {CommonService} from "../../CommonService";
+import {Notification} from "../components/Notification";
 
 export class AddSummary extends React.Component {
 
@@ -12,80 +12,43 @@ export class AddSummary extends React.Component {
         super(props);
 
         this.state = {
-            summary: {
-                date: '',
-                trawlingCount: '',
-                longitude: '',
-                latitude: '',
-                mode: '',
-                speed: '',
-                heading: '',
-                comments: '',
-                summaryRecords: []
-            }
-
+            recordsTypes: [],
+            summary: this.prepareEmptySummary(),
+            showSuccess: false,
+            showError: false
         };
 
         this.handleSummaryFieldChange = this.handleSummaryFieldChange.bind(this);
         this.handleRecordChange = this.handleRecordChange.bind(this);
         this.addSummary = this.addSummary.bind(this);
-    }
-
-    componentDidMount() {
-        axios
-            .get(createPath("/api/summaries/records/types"), CommonService.getAuthHeaders())
-            .then(res => {
-                let records = res.data.map(type => {
-                    return {
-                        name: type.typeEnum,
-                        typeName: type.typeName,
-                        units: '',
-                        day: '',
-                        board: ''
-                    }
-                });
-
-                let newState = Object.assign({}, this.state);
-                newState.summary.summaryRecords = records;
-                this.setState(newState);
-
-            })
-    }
-
-    handleRecordChange(event, typeEnum) {
-        let newState = Object.assign({}, this.state);
-        console.log(newState);
-        console.log(event);
-        console.log(typeEnum);
-        newState.summary.summaryRecords
-            .filter(record => record.name === typeEnum)
-            .forEach(record => {
-                console.log(record);
-                console.log('sasi');
-                record[event.target.name] = event.target.value
-            });
-        this.setState(newState);
-    }
-
-    handleSummaryFieldChange(event) {
-        let newState = Object.assign({}, this.state);
-        newState.summary[event.target.name] = event.target.value;
-        this.setState(newState);
+        this.fillRecordsData = this.fillRecordsData.bind(this);
+        this.closeSuccessMsg = this.closeSuccessMsg.bind(this);
+        this.closeErrorMsg = this.closeErrorMsg.bind(this);
     }
 
     render() {
-        const {summary} = this.state;
+        const {summary, showSuccess, showError} = this.state;
 
         return (
             <div className="container">
+                {showSuccess ?
+                    <Notification
+                        message={'Сводка добавлена успешно'}
+                        type="is-success"
+                        closeHandler={this.closeSuccessMsg}/> : null}
+                {showError ?
+                    <Notification
+                        message={'Ошибка созранения. Проерьте, что все поля введены верно'}
+                        type="is-danger"
+                        closeHandler={this.closeErrorMsg}/> : null}
                 <div className="title is-3">Введите данные сводки:</div>
-                <SummaryInfo summary={summary} handleSummaryFieldChange={this.handleSummaryFieldChange}/>
+                <SummaryInfoEdit summary={summary} handleSummaryFieldChange={this.handleSummaryFieldChange}/>
                 {summary.summaryRecords.map((record, index) =>
                     (
-                        <SummaryRecordRow key={index} record={record} handleChange={this.handleRecordChange}/>
+                        <SummaryRecordEditRow key={index} record={record} handleChange={this.handleRecordChange}/>
                     )
                 )}
-                <div className="field is-grouped is-grouped-centered">
+                <div className="field is-grouped is-grouped-centered" style={{"marginBottom": "50px"}}>
                     <p className="control">
                         <button type="submit" className="button is-primary" onClick={this.addSummary}>
                             Добавить сводку
@@ -97,12 +60,88 @@ export class AddSummary extends React.Component {
         );
     }
 
+
+    prepareEmptySummary() {
+        return {
+            date: '',
+            trawlingCount: '',
+            longitude: '',
+            latitude: '',
+            mode: '',
+            speed: '',
+            heading: '',
+            comments: '',
+            summaryRecords: []
+        }
+    }
+
+    componentDidMount() {
+        axios
+            .get(createPath("/api/summaries/records/types"), CommonService.getAuthHeaders())
+            .then(res => {
+                let newState = Object.assign({}, this.state);
+                newState.recordsTypes = res.data;
+                this.setState(newState);
+                this.fillRecordsData();
+            })
+    }
+
+    fillRecordsData() {
+        let records = this.state.recordsTypes.map(type => {
+            return {
+                name: type.typeEnum,
+                typeName: type.typeName,
+                units: '',
+                day: '',
+                board: ''
+            }
+        });
+        let newState = Object.assign({}, this.state);
+        newState.summary.summaryRecords = records;
+        this.setState(newState);
+
+    }
+
+    handleRecordChange(event, typeEnum) {
+        let newState = Object.assign({}, this.state);
+        newState.summary.summaryRecords
+            .filter(record => record.name === typeEnum)
+            .forEach(record => {
+                record[event.target.name] = event.target.value
+            });
+        this.setState(newState);
+    }
+
+    handleSummaryFieldChange(event) {
+        let newState = Object.assign({}, this.state);
+        newState.summary[event.target.name] = event.target.value;
+        this.setState(newState);
+    }
+
+    closeSuccessMsg() {
+        this.setState({"showSuccess": false})
+    }
+
+    closeErrorMsg() {
+        this.setState({"showError": false})
+    }
+
     addSummary() {
         axios
             .post(createPath("/api/summaries/"), this.state.summary, CommonService.getAuthHeaders())
             .then(res => {
-                console.log(res);
+                let prevState = this.state;
+                prevState.showSuccess = true;
+                prevState.summary = this.prepareEmptySummary();
+                this.fillRecordsData();
+                this.setState(prevState);
+            })
+            .catch(res => {
+                let prevState = this.state;
+                prevState.showError = true;
+                this.setState(prevState);
             })
     }
+
 }
 

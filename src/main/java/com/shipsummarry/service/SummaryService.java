@@ -44,7 +44,8 @@ public class SummaryService {
 
     public Summary getSummaryById(int summaryId) {
         Summary summary = summaryRepository.findById(summaryId).orElse(null);
-        List<SummaryRecord> summaryRecords = summary.getSummaryRecords();
+        List<SummaryRecord> records = summary.getSummaryRecords();
+        records.forEach(record -> record.setTypeName(record.getName().getName()));
         return summary;
     }
 

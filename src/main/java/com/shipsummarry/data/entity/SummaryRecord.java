@@ -38,4 +38,7 @@ public class SummaryRecord {
     @Column(name = "board")
     private Double board;
 
+    @Transient
+    private String typeName;
+
 }

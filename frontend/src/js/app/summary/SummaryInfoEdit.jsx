@@ -1,7 +1,7 @@
 import React from 'react';
 import {Field} from "../components/Field";
 
-export class SummaryInfo extends React.Component {
+export class SummaryInfoEdit extends React.Component {
 
     constructor(props) {
         super(props);
@@ -10,10 +10,8 @@ export class SummaryInfo extends React.Component {
 
     render() {
         const {handleSummaryFieldChange, summary} = this.props;
-        console.log(this.props);
 
         return (
-
             <div className="columns">
                 <div className="column is-3">
                     <Field value={summary.date}

@@ -11,7 +11,6 @@ export class SummaryTableRow extends React.Component {
         }
     }
 
-
     render() {
         const {summary} = this.props;
 
@@ -23,7 +22,7 @@ export class SummaryTableRow extends React.Component {
                 <td>{summary.longitude}</td>
                 <td>{summary.trawlingCount}</td>
                 <td>
-                    <div className="button is-info">
+                    <div className="button is-success">
                         <Link to={"/ui/summary/" + summary.summaryId}>Просмотреть детали</Link>
                     </div>
                 </td>
