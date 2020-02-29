@@ -2,8 +2,6 @@ import React from 'react';
 import axios from 'axios';
 import {createPath} from "../../commons";
 import {CommonService} from "../../CommonService";
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
 import {Field} from "../components/Field";
 import {ComparisonRow} from "./ComparisonRow";
 
@@ -72,8 +70,6 @@ export class CompareSummaries extends React.Component {
                 firstMapList = secondSummary.summaryRecords;
             }
         }
-        console.log(firstMapList);
-        console.log(secondMapList);
         const mappedRecords = firstMapList.map((item, index) => {
             const arr = secondMapList.filter(sec => sec.name === item.name);
             return (<ComparisonRow key={index} firstRecord={item} secondRecord={arr && arr.length > 0 ? arr[0] : {}}/>)
@@ -154,49 +150,24 @@ export class CompareSummaries extends React.Component {
                     </table>
                 </div>
 
-                <div className="columns">
+                <div className="container" id="comparing-table">
+                    <p className="title is-3">Первая сводка: {firstDate}. Вторая сводка: {secondDate}</p>
                     <table className="table is-striped is-fullwidth is-bordered">
                         <thead>
-                        <tr>
                             <th>Наименование</th>
-                            <th>Первый тур: День</th>
-                            <th>Первый тур: Всего</th>
-                            <th>Второй тур: День</th>
-                            <th>Второй тур: Всего</th>
-                        </tr>
+                            <th>Первая сводка: День</th>
+                            <th>Первая сводка: Всего</th>
+                            <th>Вторая сводка: День</th>
+                            <th>Вторая сводка: Всего</th>
                         </thead>
                         <tbody>
                         {mappedRecords}
                         </tbody>
                     </table>
                 </div>
-                <div className="button is-success exclude-from-pdf" onClick={this.exportToPdf}>
-                    Экспорт в PDF
-                </div>
             </div>
 
         );
-    }
-
-
-    exportToPdf() {
-        const element = document.getElementById('application');
-        html2canvas(element, {
-            ignoreElements: function (el) {
-                return el.className.indexOf('exclude-from-pdf') !== -1;
-            }
-        })
-            .then((canvas) => {
-                const imgData = canvas.toDataURL('image/png');
-                window.open().document.write('<img src="' + imgData + '" />');
-                const pdf = new jsPDF();
-                console.log(imgData);
-                const imgProps = pdf.getImageProperties(imgData);
-                const pdfWidth = pdf.internal.pageSize.getWidth();
-                const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-                pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-                pdf.save('download.pdf');
-            });
     }
 
 }

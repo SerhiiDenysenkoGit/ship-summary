@@ -4,8 +4,6 @@ import {createPath} from "../../commons";
 import {CommonService} from "../../CommonService";
 import {SummaryRecordTableRow} from "./SummaryRecordTableRow";
 import {Link} from "react-router-dom";
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
 
 export class SummaryDetails extends React.Component {
 
@@ -79,9 +77,6 @@ export class SummaryDetails extends React.Component {
                         <div className="button is-success">
                             <Link to={'/ui/summaries/edit/' + summary.summaryId}>Изменить детали</Link>
                         </div>
-                        <div className="button is-success" onClick={this.exportToPdf}>
-                            Экспорт в PDF
-                        </div>
                     </div>
                     <div className="column">
                         <table>
@@ -105,26 +100,6 @@ export class SummaryDetails extends React.Component {
             </div>
 
         );
-    }
-
-    exportToPdf() {
-        const element = document.getElementById('application');
-        html2canvas(element, {
-            windowWidth: element.scrollWidth,
-            windowHeight: element.scrollHeight,
-            ignoreElements: function(el) {
-                console.log(el.class);
-                console.log(el.className);
-            }
-        })
-            .then((canvas) => {
-                const imgData = canvas.toDataURL('image/png');
-
-                const pdf = new jsPDF({orientation: 'landscape'});
-                pdf.addImage(imgData, 'PNG', 0, 0);
-                pdf.save("download.pdf");
-            })
-        ;
     }
 
 }

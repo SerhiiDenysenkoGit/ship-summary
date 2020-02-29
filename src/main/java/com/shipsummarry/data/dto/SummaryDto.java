@@ -1,4 +1,4 @@
-package com.shipsummarry.controller.dto;
+package com.shipsummarry.data.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.shipsummarry.service.util.CustomStringDoubleDeserializer;

@@ -1,6 +1,6 @@
 package com.shipsummarry.data.repository;
 
-import com.shipsummarry.controller.dto.SummarySearchRequest;
+import com.shipsummarry.data.dto.SummarySearchRequest;
 import com.shipsummarry.data.entity.Summary;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -26,6 +26,21 @@ public interface SummaryRepository extends PagingAndSortingRepository<Summary, I
                         root.get("date"),
                         request.getDate()));
             }
+
+            return cb.and(
+                    predicates.toArray(new Predicate[]{})
+            );
+        };
+    }
+
+    static Specification<Summary> byDateRange(String from, String to) {
+        return (root, query, cb) -> {
+            query.distinct(true);
+
+            List<Predicate> predicates = new ArrayList<>();
+
+                predicates.add(cb.greaterThanOrEqualTo(root.get("date"), from));
+                predicates.add(cb.lessThanOrEqualTo(root.get("date"), to));
 
             return cb.and(
                     predicates.toArray(new Predicate[]{})

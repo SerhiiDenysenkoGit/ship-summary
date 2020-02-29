@@ -1,8 +1,8 @@
 package com.shipsummarry.controller;
 
-import com.shipsummarry.controller.dto.AuthenticationRequest;
-import com.shipsummarry.controller.dto.AuthenticationResponse;
-import com.shipsummarry.jwt.JwtTokenProvider;
+import com.shipsummarry.data.dto.AuthenticationRequest;
+import com.shipsummarry.data.dto.AuthenticationResponse;
+import com.shipsummarry.config.jwt.JwtTokenProvider;
 import com.shipsummarry.service.UserService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;

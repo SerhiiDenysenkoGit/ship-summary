@@ -17,7 +17,8 @@ public class WebUser {
 
     @Id
     @Column(name = "user_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "WEB_USER_SEQ")
+    @SequenceGenerator(sequenceName = "web_user_seq", name = "WEB_USER_SEQ", allocationSize = 1)
     private int userId;
 
     @Column(name = "username")

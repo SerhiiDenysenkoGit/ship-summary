@@ -18,7 +18,8 @@ public class SummaryRecord {
 
     @Id
     @Column(name = "summary_record_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SUMMARY_RECORD_SEQ")
+    @SequenceGenerator(sequenceName = "summary_record_seq", name = "SUMMARY_RECORD_SEQ", allocationSize = 1)
     private int summaryRecordId;
 
     @JsonIgnore

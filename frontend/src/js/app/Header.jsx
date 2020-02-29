@@ -38,6 +38,9 @@ export class HeaderRow extends React.Component {
                             <NavBarItem to='/ui/summaries/compare'
                                         title="Сравнить сводки"
                                         show={CommonService.hasOperatorRole(currentUser) || CommonService.hasAdminRole(currentUser)}/>
+                            <NavBarItem to='/ui/summaries/stats'
+                                        title="Статистика"
+                                        show={true}/>
                         </div>
                     </div>
                     <div className="navbar-end">

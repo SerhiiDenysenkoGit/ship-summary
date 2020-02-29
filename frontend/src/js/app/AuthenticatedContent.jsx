@@ -7,6 +7,7 @@ import {Cabinet} from "./Cabinet";
 import {SummaryDetails} from "./summary/SummaryDetails";
 import {EditSummary} from "./summary/EditSummary";
 import {CompareSummaries} from "./summary/CompareSummaries";
+import {SummaryStats} from "./stats/SummaryStats";
 
 export class AuthenticatedContent extends React.Component {
 
@@ -21,6 +22,7 @@ export class AuthenticatedContent extends React.Component {
                     <Route path='/ui/users/add' component={(props) => <AddUser {...props}/>}/>
                     <Route path='/ui/users/profile' component={(props) => <Cabinet {...props} currentUser={this.props.currentUser}/>}/>
                     <Route path='/ui/summaries/compare' component={(props) => <CompareSummaries {...props} currentUser={this.props.currentUser}/>}/>
+                    <Route path='/ui/summaries/stats' component={(props) => <SummaryStats {...props} currentUser={this.props.currentUser}/>}/>
                 </Switch>
             </div>
         );

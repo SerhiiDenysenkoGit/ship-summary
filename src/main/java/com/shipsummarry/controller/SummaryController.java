@@ -1,11 +1,9 @@
 package com.shipsummarry.controller;
 
-import com.shipsummarry.controller.dto.RecordTypeDto;
-import com.shipsummarry.controller.dto.SummaryDto;
-import com.shipsummarry.controller.dto.SummaryPageDto;
-import com.shipsummarry.controller.dto.SummarySearchRequest;
+import com.shipsummarry.data.dto.*;
 import com.shipsummarry.data.entity.Summary;
 import com.shipsummarry.service.SummaryService;
+import com.shipsummarry.service.SummaryStatsService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,9 +13,11 @@ import java.util.List;
 public class SummaryController {
 
     private final SummaryService summaryService;
+    private final SummaryStatsService summaryStatsService;
 
-    public SummaryController(SummaryService summaryService) {
+    public SummaryController(SummaryService summaryService, SummaryStatsService summaryStatsService) {
         this.summaryService = summaryService;
+        this.summaryStatsService = summaryStatsService;
     }
 
     @PostMapping("/search")
@@ -55,5 +55,13 @@ public class SummaryController {
         summaryService.updateSummary(summary);
     }
 
+    @GetMapping("/stats")
+    public PeriodSummaryInfo getSummaryStats(@RequestParam("from") String from, @RequestParam("to") String to) {
+        return summaryStatsService.getInfoForPeriod(from, to);
+    }
 
+    @DeleteMapping("/{summaryId}")
+    public void deleteSummary(@PathVariable("summaryId") int summaryId) {
+        summaryService.deleteSummary(summaryId);
+    }
 }

@@ -3,6 +3,7 @@ import axios from 'axios';
 import {SummaryTableRow} from "./SummaryTableRow";
 import {createPath} from "../../commons";
 import {CommonService} from "../../CommonService";
+import {Field} from "../components/Field";
 
 export class SummaryList extends React.Component {
 
@@ -19,6 +20,8 @@ export class SummaryList extends React.Component {
 
         this.fetchSummaries = this.fetchSummaries.bind(this);
         this.loadPage = this.loadPage.bind(this);
+        this.handleDateChange = this.handleDateChange.bind(this);
+        this.performRemove = this.performRemove.bind(this);
     }
 
     componentDidMount() {
@@ -36,11 +39,11 @@ export class SummaryList extends React.Component {
         prevState.currentPage = (+event.target.innerHTML - 1);
         this.setState({prevState});
 
-        this.fetchSummaries();
+        this.fetchSummaries('');
     }
 
-    fetchSummaries() {
-        const {date, currentPage, pageSize} = this.state;
+    fetchSummaries(date) {
+        const {currentPage, pageSize} = this.state;
 
         axios
             .post(createPath('/api/summaries/search'), {date: date, pageSize: pageSize, page: currentPage}, CommonService.getAuthHeaders())
@@ -57,9 +60,21 @@ export class SummaryList extends React.Component {
         return result;
     }
 
+    handleDateChange(event) {
+        this.setState({'date': event.target.value});
+        this.fetchSummaries(event.target.value);
+    }
+
+    performRemove(event, summaryId) {
+        axios.delete(createPath("/api/summaries/" + summaryId), CommonService.getAuthHeaders())
+            .then(res => {
+                this.fetchSummaries(this.state.date);
+            })
+            .catch(err => window.alert("Ошибка удаления."))
+    }
+
     render() {
-        const {summaries, pages, currentPage} = this.state;
-        console.log(this.state);
+        const {summaries, pages, currentPage, date} = this.state;
 
         const buttons = (
             <div className="buttons">
@@ -72,6 +87,15 @@ export class SummaryList extends React.Component {
 
         return (
             <div className="container">
+                <div className="columns">
+                    <div className="column">
+                        <Field value={date}
+                               label="Дата"
+                               type="date"
+                               name="date"
+                               onChange={(event) => this.handleDateChange(event, true)}/>
+                    </div>
+                </div>
                 <table className="table is-striped is-fullwidth is-bordered">
                     <thead>
                     <tr>
@@ -85,7 +109,7 @@ export class SummaryList extends React.Component {
                     </thead>
                     <tbody>
                     {summaries.map((item, index) => (
-                        <SummaryTableRow key={index} summary={item}/>
+                        <SummaryTableRow key={index} summary={item} performRemove={this.performRemove}/>
                     ))}
                     </tbody>
                 </table>

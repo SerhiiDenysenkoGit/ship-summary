@@ -9,15 +9,14 @@ export class ComparisonRow extends React.Component {
 
     render() {
         const {firstRecord, secondRecord} = this.props;
-        console.log(this.props);
 
         return (
             <tr>
-                <td>{firstRecord.typeName}</td>
-                <td>{firstRecord.day}</td>
-                <td>{firstRecord.board}</td>
-                <td>{secondRecord.day}</td>
-                <td>{secondRecord.board}</td>
+                <td>{firstRecord.typeName ? firstRecord.typeName : secondRecord.typeName}</td>
+                <td>{firstRecord.day ? firstRecord.day + ' ' + firstRecord.units : ''}</td>
+                <td>{firstRecord.board + ' ' + firstRecord.units}</td>
+                <td>{secondRecord.day ? secondRecord.day + ' ' + secondRecord.units : ''}</td>
+                <td>{secondRecord.day ? secondRecord.board + ' ' + secondRecord.units : ''}</td>
             </tr>
         );
     }

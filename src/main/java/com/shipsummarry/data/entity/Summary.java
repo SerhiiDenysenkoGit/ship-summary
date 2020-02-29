@@ -16,10 +16,11 @@ public class Summary {
 
     @Id
     @Column(name = "summary_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SUMMARY_SEQ")
+    @SequenceGenerator(sequenceName = "summary_seq", name = "SUMMARY_SEQ", allocationSize = 1)
     private int summaryId;
 
-    @Column(name = "date")
+    @Column(name = "summary_date")
     private String date;
 
     @Column(name = "longitude")
@@ -34,7 +35,7 @@ public class Summary {
     @Column(name = "heading")
     private String heading;
 
-    @Column(name = "mode")
+    @Column(name = "ship_mode")
     private String mode;
 
     @Column(name = "trawling_count")
@@ -43,7 +44,7 @@ public class Summary {
     @Column(name = "comments")
     private String comments;
 
-    @OneToMany(mappedBy = "summary", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "summary", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<SummaryRecord> summaryRecords;
 
 }

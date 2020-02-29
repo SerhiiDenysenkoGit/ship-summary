@@ -32,6 +32,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "bootstrap": "^4.4.1",
+    "chart.js": "^2.9.3",
     "grommet": "^2.11.1",
     "grommet-icons": "^4.4.0",
     "html2canvas": "^1.0.0-rc.5",

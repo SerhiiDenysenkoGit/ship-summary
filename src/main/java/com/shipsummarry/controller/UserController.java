@@ -1,6 +1,6 @@
 package com.shipsummarry.controller;
 
-import com.shipsummarry.controller.dto.PasswordChangeRequest;
+import com.shipsummarry.data.dto.PasswordChangeRequest;
 import com.shipsummarry.data.entity.WebUser;
 import com.shipsummarry.service.UserService;
 import org.springframework.security.core.context.SecurityContextHolder;

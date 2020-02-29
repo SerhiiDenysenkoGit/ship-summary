@@ -1,4 +1,4 @@
-package com.shipsummarry.jwt;
+package com.shipsummarry.config.jwt;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

@@ -1,7 +1,7 @@
 package com.shipsummarry.service.util;
 
-import com.shipsummarry.controller.dto.SummaryDto;
-import com.shipsummarry.controller.dto.SummaryRecordDto;
+import com.shipsummarry.data.dto.SummaryDto;
+import com.shipsummarry.data.dto.SummaryRecordDto;
 import com.shipsummarry.data.entity.Summary;
 import com.shipsummarry.data.entity.SummaryRecord;
 import lombok.experimental.UtilityClass;

@@ -1,4 +1,4 @@
-package com.shipsummarry.controller.dto;
+package com.shipsummarry.data.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

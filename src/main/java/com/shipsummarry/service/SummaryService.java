@@ -1,9 +1,9 @@
 package com.shipsummarry.service;
 
-import com.shipsummarry.controller.dto.RecordTypeDto;
-import com.shipsummarry.controller.dto.SummaryDto;
-import com.shipsummarry.controller.dto.SummaryPageDto;
-import com.shipsummarry.controller.dto.SummarySearchRequest;
+import com.shipsummarry.data.dto.RecordTypeDto;
+import com.shipsummarry.data.dto.SummaryDto;
+import com.shipsummarry.data.dto.SummaryPageDto;
+import com.shipsummarry.data.dto.SummarySearchRequest;
 import com.shipsummarry.data.entity.RecordType;
 import com.shipsummarry.data.entity.Summary;
 import com.shipsummarry.data.entity.SummaryRecord;
@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.HttpClientErrorException;
 
+import java.beans.Transient;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -102,5 +103,10 @@ public class SummaryService {
     @Transactional(readOnly = true)
     public boolean checkIfSummaryExistsForDate(String date) {
         return summaryRepository.findOne(SummaryRepository.byDate(date)).isPresent();
+    }
+
+    @Transactional
+    public void deleteSummary(int summaryId) {
+        summaryRepository.deleteById(summaryId);
     }
 }

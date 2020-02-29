@@ -12,7 +12,7 @@ export class SummaryTableRow extends React.Component {
     }
 
     render() {
-        const {summary} = this.props;
+        const {summary, performRemove} = this.props;
 
         return (
             <tr>
@@ -24,6 +24,10 @@ export class SummaryTableRow extends React.Component {
                 <td>
                     <div className="button is-success">
                         <Link to={"/ui/summary/" + summary.summaryId}>Просмотреть детали</Link>
+                    </div>
+
+                    <div className="button is-danger" onClick={(event) => performRemove(event, summary.summaryId)}>
+                        Удалить
                     </div>
                 </td>
             </tr>

@@ -1,7 +1,7 @@
 package com.shipsummarry.config;
 
-import com.shipsummarry.jwt.JwtConfigurer;
-import com.shipsummarry.jwt.JwtTokenProvider;
+import com.shipsummarry.config.jwt.JwtConfigurer;
+import com.shipsummarry.config.jwt.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;

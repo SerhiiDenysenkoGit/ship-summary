@@ -1,4 +1,4 @@
-package com.shipsummarry.jwt;
+package com.shipsummarry.config.jwt;
 
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Qualifier;
