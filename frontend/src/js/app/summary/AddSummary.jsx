@@ -60,7 +60,6 @@ export class AddSummary extends React.Component {
         );
     }
 
-
     prepareEmptySummary() {
         return {
             date: '',

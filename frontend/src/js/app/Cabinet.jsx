@@ -8,7 +8,7 @@ export class Cabinet extends React.Component {
 
     constructor(props) {
         super(props);
-        console.log(props);
+
         this.state = {
             currentUser: props.currentUser,
             passwordChange: {

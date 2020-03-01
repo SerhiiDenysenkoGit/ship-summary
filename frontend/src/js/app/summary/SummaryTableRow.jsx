@@ -1,5 +1,6 @@
 import React from 'react';
 import {Link} from "react-router-dom";
+import {CommonService} from "../../CommonService";
 
 export class SummaryTableRow extends React.Component {
 
@@ -12,7 +13,7 @@ export class SummaryTableRow extends React.Component {
     }
 
     render() {
-        const {summary, performRemove} = this.props;
+        const {summary, performRemove, currentUser} = this.props;
 
         return (
             <tr>
@@ -25,10 +26,13 @@ export class SummaryTableRow extends React.Component {
                     <div className="button is-success">
                         <Link to={"/ui/summary/" + summary.summaryId}>Просмотреть детали</Link>
                     </div>
-
-                    <div className="button is-danger" onClick={(event) => performRemove(event, summary.summaryId)}>
-                        Удалить
-                    </div>
+                    &nbsp;
+                    &nbsp;
+                    {CommonService.hasAdminRole(currentUser) ? (
+                        <div className="button is-danger" onClick={(event) => performRemove(event, summary.summaryId)}>
+                            Удалить
+                        </div>
+                    ) : null}
                 </td>
             </tr>
         );

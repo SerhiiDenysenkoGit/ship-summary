@@ -96,9 +96,11 @@ export class CompareSummaries extends React.Component {
                 <div className="columns">
                     <table className="table is-striped is-fullwidth is-bordered">
                         <thead>
-                        <th></th>
-                        <th>{firstDate}</th>
-                        <th>{secondDate}</th>
+                            <tr>
+                                <th>Даты</th>
+                                <th>{firstDate}</th>
+                                <th>{secondDate}</th>
+                            </tr>
                         </thead>
                         <tbody>
                         <tr>
@@ -154,11 +156,13 @@ export class CompareSummaries extends React.Component {
                     <p className="title is-3">Первая сводка: {firstDate}. Вторая сводка: {secondDate}</p>
                     <table className="table is-striped is-fullwidth is-bordered">
                         <thead>
-                            <th>Наименование</th>
-                            <th>Первая сводка: День</th>
-                            <th>Первая сводка: Всего</th>
-                            <th>Вторая сводка: День</th>
-                            <th>Вторая сводка: Всего</th>
+                            <tr>
+                                <th>Наименование</th>
+                                <th>Первая сводка: День</th>
+                                <th>Первая сводка: Всего</th>
+                                <th>Вторая сводка: День</th>
+                                <th>Вторая сводка: Всего</th>
+                            </tr>
                         </thead>
                         <tbody>
                         {mappedRecords}

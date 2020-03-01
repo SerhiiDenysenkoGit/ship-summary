@@ -20,7 +20,6 @@ public interface SummaryRepository extends PagingAndSortingRepository<Summary, I
             query.distinct(true);
 
             List<Predicate> predicates = new ArrayList<>();
-
             if (!StringUtils.isEmpty(request.getDate())) {
                 predicates.add(cb.equal(
                         root.get("date"),
@@ -36,24 +35,20 @@ public interface SummaryRepository extends PagingAndSortingRepository<Summary, I
     static Specification<Summary> byDateRange(String from, String to) {
         return (root, query, cb) -> {
             query.distinct(true);
-
-            List<Predicate> predicates = new ArrayList<>();
-
-                predicates.add(cb.greaterThanOrEqualTo(root.get("date"), from));
-                predicates.add(cb.lessThanOrEqualTo(root.get("date"), to));
-
             return cb.and(
-                    predicates.toArray(new Predicate[]{})
+                    cb.greaterThanOrEqualTo(root.get("date"), from),
+                    cb.lessThanOrEqualTo(root.get("date"), to)
             );
         };
     }
 
-    static Specification<Summary> equalPredicate(String fieldName, String value) {
-        return (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.equal(root.get(fieldName), value);
-    }
-
     static Specification<Summary> byDate(String date) {
         return equalPredicate("date", date);
+    }
+
+
+    static Specification<Summary> equalPredicate(String fieldName, String value) {
+        return (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.equal(root.get(fieldName), value);
     }
 
 }

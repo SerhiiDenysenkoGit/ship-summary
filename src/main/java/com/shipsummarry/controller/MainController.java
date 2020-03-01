@@ -21,5 +21,4 @@ public class MainController {
         httpServletResponse.setStatus(302);
     }
 
-
 }

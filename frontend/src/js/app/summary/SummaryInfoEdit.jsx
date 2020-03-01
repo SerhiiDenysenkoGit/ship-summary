@@ -25,7 +25,6 @@ export class SummaryInfoEdit extends React.Component {
 
     render() {
         const {handleSummaryFieldChange, summary, dateDisabled} = this.props;
-        console.log(this.state);
 
         return (
             <div className="columns">

@@ -20,9 +20,24 @@ public class SummaryController {
         this.summaryStatsService = summaryStatsService;
     }
 
+    @PostMapping
+    public int createSummary(@RequestBody SummaryDto summary) {
+        return summaryService.createSummary(summary);
+    }
+
+    @PatchMapping
+    public void updateSummary(@RequestBody SummaryDto summary) {
+        summaryService.updateSummary(summary);
+    }
+
     @PostMapping("/search")
     public SummaryPageDto getSummaries(@RequestBody SummarySearchRequest request) {
         return summaryService.getSummaries(request);
+    }
+
+    @DeleteMapping("/{summaryId}")
+    public void deleteSummary(@PathVariable("summaryId") int summaryId) {
+        summaryService.deleteSummary(summaryId);
     }
 
     @GetMapping("/{summaryId}")
@@ -45,23 +60,9 @@ public class SummaryController {
         return summaryService.getRecordTypes();
     }
 
-    @PostMapping("")
-    public int createSummary(@RequestBody SummaryDto summary) {
-        return summaryService.createSummary(summary);
-    }
-
-    @PatchMapping("")
-    public void updateSummary(@RequestBody SummaryDto summary) {
-        summaryService.updateSummary(summary);
-    }
-
     @GetMapping("/stats")
     public PeriodSummaryInfo getSummaryStats(@RequestParam("from") String from, @RequestParam("to") String to) {
         return summaryStatsService.getInfoForPeriod(from, to);
     }
 
-    @DeleteMapping("/{summaryId}")
-    public void deleteSummary(@PathVariable("summaryId") int summaryId) {
-        summaryService.deleteSummary(summaryId);
-    }
 }

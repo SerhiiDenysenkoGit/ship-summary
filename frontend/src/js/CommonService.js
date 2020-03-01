@@ -18,35 +18,23 @@ export class CommonService {
     }
 
     static getAuthHeaders() {
-        return CommonService.tokenExists() ? {
-            headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem('authorization')
+        return CommonService.tokenExists()
+            ?
+            {
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('authorization')
+                }
             }
-        } : {headers: {}};
-
+            :
+            {headers: {}};
     }
 
     static hasAdminRole(user) {
-        return user.role === 'ADMIN';
+        return user && user.role === 'ADMIN';
     }
 
     static hasOperatorRole(user) {
-        return user.role === 'OPERATOR';
+        return user && user.role === 'OPERATOR';
     }
 
-    static formatDate(date) {
-        const inputDate = new Date(date);
-        let result = inputDate.getFullYear() + '-';
-        result += (inputDate.getMonth() < 9 ? '0' + (inputDate.getMonth() + 1) : (inputDate.getMonth() + 1)) + "-";
-        result += inputDate.getDate() < 10 ? '0' + (inputDate.getDate()) : (inputDate.getDate());
-        return result;
-    }
-
-    static setLanguage(value) {
-        localStorage.setItem('lang', value);
-    }
-
-    static getLanguage() {
-        return localStorage.getItem('lang');
-    }
 }

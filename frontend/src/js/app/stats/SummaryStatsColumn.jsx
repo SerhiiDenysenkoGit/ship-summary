@@ -15,8 +15,6 @@ export class SummaryStatsColumn extends React.Component {
     }
 
     render() {
-        console.log(this.state);
-
         const {isLoaded, stats} = this.props;
         const dataExists = isLoaded && stats.recordsQuantity > 0;
         const avgs = dataExists

@@ -77,7 +77,10 @@ export class EditSummary extends React.Component {
                         type="is-danger"
                         closeHandler={this.closeErrorMsg}/> : null}
                 <div className="title is-3">Введите данные сводки:</div>
-                <SummaryInfoEdit dateDisabled={true} summary={summary} handleSummaryFieldChange={this.handleSummaryFieldChange}/>
+                <SummaryInfoEdit
+                    dateDisabled={true}
+                    summary={summary}
+                    handleSummaryFieldChange={this.handleSummaryFieldChange}/>
                 {summary.summaryRecords.map((record, index) =>
                     (
                         <SummaryRecordEditRow key={index} record={record} handleChange={this.handleRecordChange}/>
@@ -99,7 +102,6 @@ export class EditSummary extends React.Component {
         axios
             .patch(createPath("/api/summaries/"), this.state.summary, CommonService.getAuthHeaders())
             .then(res => {
-                console.log(res);
                 let prevState = Object.assign({}, this.state);
                 prevState.showSuccess = true;
                 prevState.showError = false;

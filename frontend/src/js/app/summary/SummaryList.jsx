@@ -109,7 +109,11 @@ export class SummaryList extends React.Component {
                     </thead>
                     <tbody>
                     {summaries.map((item, index) => (
-                        <SummaryTableRow key={index} summary={item} performRemove={this.performRemove}/>
+                        <SummaryTableRow
+                            key={index}
+                            summary={item}
+                            performRemove={this.performRemove}
+                            currentUser={this.props.currentUser}/>
                     ))}
                     </tbody>
                 </table>

@@ -51,7 +51,7 @@ export class App extends React.Component {
                         : <UnauthenticatedContent/>}
                 </div>
             )
-            : <h3 className="title is-3">Загрузка...</h3>;
+            : <h3 className="title is-5">Загрузка...</h3>;
     }
 
 }

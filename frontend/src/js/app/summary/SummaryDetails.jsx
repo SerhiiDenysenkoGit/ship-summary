@@ -37,46 +37,48 @@ export class SummaryDetails extends React.Component {
                     <div className="column">
                         <table>
                             <tbody>
-                                <tr>
-                                    <td>ID сводки</td>
-                                    <td>{summary.summaryId}</td>
-                                </tr>
-                                <tr>
-                                    <td>Дата</td>
-                                    <td>{summary.date}</td>
-                                </tr>
-                                <tr>
-                                    <td>Количенство тралений</td>
-                                    <td>{summary.trawlingCount}</td>
-                                </tr>
-                                <tr>
-                                    <td>Широта</td>
-                                    <td>{summary.latitude}</td>
-                                </tr>
-                                <tr>
-                                    <td>Долгота</td>
-                                    <td>{summary.longitude}</td>
-                                </tr>
-                                <tr>
-                                    <td>Режим работы</td>
-                                    <td>{summary.mode}</td>
-                                </tr>
-                                <tr>
-                                    <td>Направление</td>
-                                    <td>{summary.heading}</td>
-                                </tr>
-                                <tr>
-                                    <td>Скорость</td>
-                                    <td>{summary.speed}</td>
-                                </tr>
-                                <tr>
-                                    <td colSpan="2">{summary.comments}</td>
-                                </tr>
+                            <tr>
+                                <td>ID сводки</td>
+                                <td>{summary.summaryId}</td>
+                            </tr>
+                            <tr>
+                                <td>Дата</td>
+                                <td>{summary.date}</td>
+                            </tr>
+                            <tr>
+                                <td>Количенство тралений</td>
+                                <td>{summary.trawlingCount}</td>
+                            </tr>
+                            <tr>
+                                <td>Широта</td>
+                                <td>{summary.latitude}</td>
+                            </tr>
+                            <tr>
+                                <td>Долгота</td>
+                                <td>{summary.longitude}</td>
+                            </tr>
+                            <tr>
+                                <td>Режим работы</td>
+                                <td>{summary.mode}</td>
+                            </tr>
+                            <tr>
+                                <td>Направление</td>
+                                <td>{summary.heading}</td>
+                            </tr>
+                            <tr>
+                                <td>Скорость</td>
+                                <td>{summary.speed}</td>
+                            </tr>
+                            <tr>
+                                <td colSpan="2">{summary.comments}</td>
+                            </tr>
                             </tbody>
                         </table>
-                        <div className="button is-success">
-                            <Link to={'/ui/summaries/edit/' + summary.summaryId}>Изменить детали</Link>
-                        </div>
+                        {CommonService.hasAdminRole(this.props.currentUser) ? (
+                            <div className="button is-success">
+                                <Link to={'/ui/summaries/edit/' + summary.summaryId}>Изменить детали</Link>
+                            </div>
+                        ) : null}
                     </div>
                     <div className="column">
                         <table>
